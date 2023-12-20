@@ -1,4 +1,4 @@
-import { array, date, number, object, string, TypeOf } from "zod";
+import { array, number, object, string, TypeOf } from "zod";
 
 const validDaysOfWeek = [
   "Sunday",
@@ -10,9 +10,14 @@ const validDaysOfWeek = [
   "Saturday",
 ];
 
+const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const scheduleSchema = object({
-  startDate: date(),
-  endDate: date(),
+  startDate: string().refine((date: string) => dateRegex.test(date), {
+    message: "Invalid date format for startDate",
+  }),
+  endDate: string().refine((date: string) => dateRegex.test(date), {
+    message: "Invalid date format for endDate",
+  }),
   classDays: array(
     string().refine((day) => validDaysOfWeek.includes(day), {
       message: "Invalid day of the week",
