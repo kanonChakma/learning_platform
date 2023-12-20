@@ -1,4 +1,4 @@
-import { FilterQuery, QueryOptions } from "mongoose";
+import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 import CourseModel, {
   CourseDocument,
   CourseInput,
@@ -39,6 +39,18 @@ export const deleteCourseByCourseId = async (
 ) => {
   try {
     return await CourseModel.deleteOne(query);
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const UpdateCourseByCourseId = async (
+  query: FilterQuery<CourseDocument>,
+  update: UpdateQuery<CourseDocument>,
+  options: QueryOptions
+) => {
+  try {
+    return await CourseModel.findOneAndUpdate(query, update, options);
   } catch (error: any) {
     throw new Error(error);
   }
