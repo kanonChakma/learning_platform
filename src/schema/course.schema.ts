@@ -48,8 +48,32 @@ const payload = {
   }),
 };
 
+const params = {
+  params: object({
+    courseId: string({
+      required_error: "CourseId is required!!",
+    }),
+  }),
+};
+
 export const createCourseSchema = object({
   ...payload,
 });
 
+export const getCourseSchema = object({
+  ...params,
+});
+
+export const updateCourseSchema = object({
+  ...payload,
+  ...params,
+});
+
+export const deleteCourseSchema = object({
+  ...params,
+});
+
 export type CreateCourseInput = TypeOf<typeof createCourseSchema>;
+export type GetCourseInput = TypeOf<typeof getCourseSchema>;
+export type UpdateCourseInput = TypeOf<typeof updateCourseSchema>;
+export type DeleteCourseInput = TypeOf<typeof deleteCourseSchema>;

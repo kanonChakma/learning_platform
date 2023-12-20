@@ -1,12 +1,14 @@
 import express from "express";
 import {
-  createCoursectHandler,
-  getCoursectHandler,
+  createCourseHandler,
+  findCourseHandler,
+  getAllCourseHandler,
 } from "../controller/course.controller";
 import validate from "../middleware/ validateResource";
-import { createCourseSchema } from "../schema/course.schema";
+import { createCourseSchema, getCourseSchema } from "../schema/course.schema";
 
 export default (router: express.Router) => {
-  router.post("/course", validate(createCourseSchema), createCoursectHandler);
-  router.get("/course", getCoursectHandler);
+  router.post("/course", validate(createCourseSchema), createCourseHandler);
+  router.get("/course", getAllCourseHandler);
+  router.get("/course/:courseId", validate(getCourseSchema), findCourseHandler);
 };

@@ -18,7 +18,7 @@ export interface CourseInput {
   schedule: Schedule;
 }
 
-interface CourseDocument extends CourseInput, Document {
+export interface CourseDocument extends CourseInput, Document {
   createdAt: Date;
   updateAt: Date;
 }
