@@ -13,7 +13,7 @@ export const createCourse = async (input: Omit<CourseInput, "courseId">) => {
   }
 };
 
-export const getCourse = async () => {
+export const getAllCourse = async () => {
   try {
     const courses = await CourseModel.find();
     return courses;
@@ -29,6 +29,16 @@ export const findCourseByCourseId = async (
   try {
     const course = await CourseModel.findOne(query, {}, options);
     return course;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const deleteCourseByCourseId = async (
+  query: FilterQuery<CourseDocument>
+) => {
+  try {
+    return await CourseModel.deleteOne(query);
   } catch (error: any) {
     throw new Error(error);
   }

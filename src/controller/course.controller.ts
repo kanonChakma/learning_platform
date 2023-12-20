@@ -1,9 +1,14 @@
 import { Request, Response } from "express";
-import { CreateCourseInput, UpdateCourseInput } from "../schema/course.schema";
+import {
+  CreateCourseInput,
+  DeleteCourseInput,
+  UpdateCourseInput,
+} from "../schema/course.schema";
 import {
   createCourse,
+  deleteCourseByCourseId,
   findCourseByCourseId,
-  getCourse,
+  getAllCourse,
 } from "../services/course.service";
 
 export const createCourseHandler = async (
@@ -16,7 +21,7 @@ export const createCourseHandler = async (
 };
 
 export const getAllCourseHandler = async (req: Request, res: Response) => {
-  const courses = await getCourse();
+  const courses = await getAllCourse();
   return res.send(courses);
 };
 
@@ -31,4 +36,20 @@ export const findCourseHandler = async (
     return res.status(404).json({ error: "Course not found" });
   }
   return res.status(200).json(course);
+};
+
+export const deleteCourseHandler = async (
+  req: Request<DeleteCourseInput["params"]>,
+  res: Response
+) => {
+  const userId = res.locals.user;
+  const courseId = req.params.courseId;
+  const course = await findCourseByCourseId({ courseId });
+
+  if (!course) {
+    return res.status(404).json({ error: "Course not found" });
+  }
+
+  await deleteCourseByCourseId({ courseId });
+  return res.status(200).json({ message: "course deleted successfully!!!" });
 };
