@@ -13,7 +13,7 @@ import {
 } from "../services/course.service";
 
 export const createCourseHandler = async (
-  req: Request<{}, {}, CreateCourseInput["body"]>,
+  req: Request<{}, {}, CreateCourseInput>,
   res: Response
 ) => {
   const data = req.body;
@@ -29,7 +29,7 @@ export const getAllCourseHandler = async (req: Request, res: Response) => {
 };
 
 export const findCourseHandler = async (
-  req: Request<UpdateCourseInput["params"]>,
+  req: Request<UpdateCourseInput>,
   res: Response
 ) => {
   const courseId = req.params.courseId;
@@ -42,7 +42,7 @@ export const findCourseHandler = async (
 };
 
 export const deleteCourseHandler = async (
-  req: Request<DeleteCourseInput["params"]>,
+  req: Request<DeleteCourseInput>,
   res: Response
 ) => {
   const userId = res.locals.user;
@@ -58,7 +58,7 @@ export const deleteCourseHandler = async (
 };
 
 export const updateCourseHandler = async (
-  req: Request<UpdateCourseInput["params"]>,
+  req: Request<UpdateCourseInput>,
   res: Response
 ) => {
   const courseId = req.params.courseId;

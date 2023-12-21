@@ -73,7 +73,7 @@ export const deleteCourseSchema = object({
   ...params,
 });
 
-export type CreateCourseInput = TypeOf<typeof createCourseSchema>;
-export type GetCourseInput = TypeOf<typeof getCourseSchema>;
-export type UpdateCourseInput = TypeOf<typeof updateCourseSchema>;
-export type DeleteCourseInput = TypeOf<typeof deleteCourseSchema>;
+export type CreateCourseInput = TypeOf<typeof createCourseSchema>["body"];
+export type GetCourseInput = TypeOf<typeof getCourseSchema>["params"];
+export type UpdateCourseInput = TypeOf<typeof updateCourseSchema>["params"];
+export type DeleteCourseInput = TypeOf<typeof deleteCourseSchema>["params"];
