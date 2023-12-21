@@ -21,16 +21,12 @@ app.use(
   })
 );
 
-// helthCheck
-app.get(
-  "/api/healthChecker",
-  (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-      status: "success",
-      message: "Welcome to Learning Platform",
-    });
-  }
-);
+app.get("/healthCheck", (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).json({
+    status: "success",
+    message: "Welcome to Learning Platform",
+  });
+});
 
 app.use("/api/auth", authRouter);
 app.use("/api/course", courseRouter);
