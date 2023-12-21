@@ -1,4 +1,4 @@
-import { array, date, number, object, string, TypeOf } from "zod";
+import { array, number, object, string, TypeOf } from "zod";
 
 const validDaysOfWeek = [
   "Sunday",
@@ -10,9 +10,14 @@ const validDaysOfWeek = [
   "Saturday",
 ];
 
+const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 const scheduleSchema = object({
-  startDate: date(),
-  endDate: date(),
+  startDate: string().refine((date: string) => dateRegex.test(date), {
+    message: "Invalid date format for startDate",
+  }),
+  endDate: string().refine((date: string) => dateRegex.test(date), {
+    message: "Invalid date format for endDate",
+  }),
   classDays: array(
     string().refine((day) => validDaysOfWeek.includes(day), {
       message: "Invalid day of the week",
@@ -43,8 +48,32 @@ const payload = {
   }),
 };
 
+const params = {
+  params: object({
+    courseId: string({
+      required_error: "CourseId is required!!",
+    }),
+  }),
+};
+
 export const createCourseSchema = object({
   ...payload,
 });
 
-export type CreateCourseInput = TypeOf<typeof createCourseSchema>;
+export const getCourseSchema = object({
+  ...params,
+});
+
+export const updateCourseSchema = object({
+  ...payload,
+  ...params,
+});
+
+export const deleteCourseSchema = object({
+  ...params,
+});
+
+export type CreateCourseInput = TypeOf<typeof createCourseSchema>["body"];
+export type GetCourseInput = TypeOf<typeof getCourseSchema>["params"];
+export type UpdateCourseInput = TypeOf<typeof updateCourseSchema>["params"];
+export type DeleteCourseInput = TypeOf<typeof deleteCourseSchema>["params"];

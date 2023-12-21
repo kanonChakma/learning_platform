@@ -1,13 +1,14 @@
 import mongoose, { Document } from "mongoose";
-
+import { v4 as uuidv4 } from "uuid";
 interface Schedule {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   classDays: string[];
   classTime: string;
 }
 
 export interface CourseInput {
+  courseId: string;
   name: string;
   description: string;
   price: number;
@@ -17,13 +18,19 @@ export interface CourseInput {
   schedule: Schedule;
 }
 
-interface CourseDocument extends CourseInput, Document {
+export interface CourseDocument extends CourseInput, Document {
   createdAt: Date;
   updateAt: Date;
 }
 
 const CourseSchema = new mongoose.Schema(
   {
+    courseId: {
+      type: String,
+      required: true,
+      unique: true,
+      default: () => `course_${uuidv4()}`,
+    },
     name: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
